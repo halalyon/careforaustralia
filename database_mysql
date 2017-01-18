@@ -1,0 +1,45 @@
+create table Home_address(
+Address_id int not null primary key,
+UnitNo int,
+StreetName varchar(255) not null,
+StateName varchar(255) not null,
+Postcode int not null
+)
+
+create table Emergency_contact(
+Emergency_id int not null primary key,
+Emergency_contact_name varchar(255),
+Contact_phone varchar(255),
+Relationship varchar(255)
+)
+
+
+create table Carer_meta_info(
+Meta_id int not null primary key,
+FirstName varchar(255), 
+LastName varchar(255),
+Address_id int,
+Email varchar(255),
+Gender ENUM('Male','Female'),
+Dateofbirth date,
+Emergency_id int,
+Police_check tinyint(1),
+licensed_driver tinyint(1),
+registered_vehicle tinyint(1),
+Insurance tinyint(1),
+registered_medical_practice tinyint(1)
+)
+
+create table Carer_info(
+Meta_id int not null primary key,
+Service_id int,
+Ratings float,
+Education Longtext,
+)
+
+create table Postcode_info(
+postcode_id int not null primary key,
+postcode int not null,
+latitude float,
+longtitude float,
+)
