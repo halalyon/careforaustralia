@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Place Autocomplete With Latitude & Longitude </title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+        #pac-input {
+            background-color: #fff;
+            padding: 0 11px 0 13px;
+            width: 400px;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            text-overflow: ellipsis;
+        }
+        #pac-input:focus {
+            border-color: #4d90fe;
+            margin-left: -1px;
+            padding-left: 14px;  /* Regular padding-left + 1. */
+            width: 401px;
+        }
+
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+    <script>
+
+
+        function initialize() {
+                var address = (document.getElementById('pac-input'));
+                var autocomplete = new google.maps.places.Autocomplete(address);
+                autocomplete.setTypes(['geocode']);
+                google.maps.event.addListener(autocomplete, 'place_changed', function() {
+                    var place = autocomplete.getPlace();
+                    if (!place.geometry) {
+                        return;
+                    }
+
+                var address = '';
+                if (place.address_components) {
+                    address = [
+                        (place.address_components[0] && place.address_components[0].short_name || ''),
+                        (place.address_components[1] && place.address_components[1].short_name || ''),
+                        (place.address_components[2] && place.address_components[2].short_name || '')
+                        ].join(' ');
+                }
+                /*********************************************************************/
+                /* var address contain your autocomplete address *********************/
+                /* place.geometry.location.lat() && place.geometry.location.lat() ****/
+                /* will be used for current address latitude and longitude************/
+                /*********************************************************************/
+                var lat = place.geometry.location.lat();
+                var lng = place.geometry.location.lng();
+
+                // var R = 6371; //the equator radius
+                // var dlat = (lat2-lat1).toRad();
+                // var dlng = (lng2-lng1).toRad();
+                // var lat1 = lat1.toRad();
+                // var lat2 = lat2.toRad();
+                
+                // var a = Math.sin(dlat/2)*Math.sin(dlat/2)+Math.sin(dlng/2)*Math.sin(dlng/2)*Math.cos(lat1)*Math.cos(lat2);
+                // var c = 2* Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+                // var d = R*c;
+
+
+                document.getElementById('lat').innerHTML = lat;
+                document.getElementById('long').innerHTML = lng;
+                document.getElementById('place').innerHTML = address;
+
+                document.getElementById('component0').innerHTML = place.address_components[0].long_name;
+                document.getElementById('component1').innerHTML = place.address_components[1].long_name;
+                document.getElementById('component2').innerHTML = place.address_components[2].long_name;
+                });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+    </head>
+    <body>
+<input id="pac-input" class="controls" type="text"
+        placeholder="Enter a location">
+<div id="lat"></div>
+<div id="long"></div>
+<div id="place"></div>
+<div id="component0"></div>
+<div id="component1"></div>
+<div id="component2"></div>
+</body>
+</html>
